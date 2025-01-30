@@ -11,6 +11,8 @@ services:
         value: "1"
     healthCheckPath: "/health/"  # Ensure this endpoint exists in your FastAPI app
     dockerfilePath: "ollama-deployment/app/backend/Dockerfile"
+    networks:
+      - tutorial-net
 
   - type: web
     name: streamlit-frontend
@@ -26,14 +28,14 @@ services:
         value: "http://fastapi-backend:8000"  # Connects Streamlit to FastAPI internally
     healthCheckPath: "/health"  # Ensure this endpoint exists in your Streamlit app
     dockerfilePath: "ollama-deployment/app/frontend/Dockerfile"
+    networks:
+      - tutorial-net
     
   - type: background
     name: ollama
     runtime: docker
     buildCommand: "docker build -t ollama-image ollama"
-    startCommand: "docker run ollama-image"
-    ports:
-      - 11434:11434
+    startCommand: "docker run -p 11434:11434 ollama-image"
     volumes:
       - tutorial-vol:/ollama
     networks:
