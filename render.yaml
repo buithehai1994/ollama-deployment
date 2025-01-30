@@ -27,3 +27,13 @@ services:
         value: "http://fastapi-backend:8000"  # Connects Streamlit to FastAPI internally
     healthCheckPath: "/health"
     dockerfilePath: "ollama-deployment/app/frontend/Dockerfile"
+    
+  - ollama:
+    build: ollama
+    ports:
+      - 11434:11434
+    volumes:
+      - tutorial-vol:/ollama
+    networks:
+      - tutorial-net
+    entrypoint: ["/usr/bin/bash", "/pull-llama3.sh"]
