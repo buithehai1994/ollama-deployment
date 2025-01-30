@@ -10,7 +10,7 @@ services:
       - key: PYTHONUNBUFFERED
         value: "1"
     healthCheckPath: "/health/"
-    dockerfilePath: "at2_ml_as_a_service_api/app/backend/Dockerfile"
+    dockerfilePath: "ollama-deployment/app/backend/Dockerfile"
 
   - type: web
     name: streamlit-frontend
