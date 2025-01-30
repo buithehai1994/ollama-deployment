@@ -14,6 +14,7 @@ certifi==2024.12.14
     # via
     #   httpcore
     #   httpx
+cmake
 click==8.1.8
     # via uvicorn
 colorama==0.4.6
