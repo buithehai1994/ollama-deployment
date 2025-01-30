@@ -19,3 +19,16 @@ async def generate_text(prompt: str):
         return {"generated_text": result['message']['content']}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Text generation failed: {str(e)}")
+
+# Health check endpoint
+@app.get("/health/")
+def health_check():
+    try:
+        # You could check if the Ollama model is available, for instance
+        result = ollama.chat(model=ollama_model, messages=[{"role": "user", "content": "health check"}])
+        if result:
+            return {"status": "healthy"}
+        else:
+            raise HTTPException(status_code=500, detail="Health check failed")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Health check failed: {str(e)}")
