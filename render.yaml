@@ -26,4 +26,4 @@ services:
       - key: BACKEND_URL
         value: "http://fastapi-backend:8000"  # Connects Streamlit to FastAPI internally
     healthCheckPath: "/health"
-    dockerfilePath: "at2_ml_as_a_service_api/app/frontend/Dockerfile"
+    dockerfilePath: "ollama-deployment/app/frontend/Dockerfile"
