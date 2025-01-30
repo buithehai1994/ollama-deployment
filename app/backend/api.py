@@ -15,17 +15,17 @@ def read_root():
 async def generate_text(prompt: str):
     try:
         # Generate response from the Ollama model
-        result = ollama.chat(model=ollama_model, messages=[{"role": "user", "content": prompt}])
+        result = await ollama.chat(model=ollama_model, messages=[{"role": "user", "content": prompt}])
         return {"generated_text": result['message']['content']}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Text generation failed: {str(e)}")
 
 # Health check endpoint
 @app.get("/health/")
-def health_check():
+async def health_check():
     try:
-        # You could check if the Ollama model is available, for instance
-        result = ollama.chat(model=ollama_model, messages=[{"role": "user", "content": "health check"}])
+        # Check if the Ollama model is available
+        result = await ollama.chat(model=ollama_model, messages=[{"role": "user", "content": "health check"}])
         if result:
             return {"status": "healthy"}
         else:
