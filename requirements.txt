@@ -37,8 +37,6 @@ idna==3.10
     #   httpx
 jinja2==3.1.5
     # via llama-cpp-python
-llama-cpp-python==0.3.7
-    # via -r requirements.in
 markupsafe==3.0.2
     # via jinja2
 numpy
