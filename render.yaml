@@ -9,7 +9,7 @@ services:
         value: "8000"
       - key: PYTHONUNBUFFERED
         value: "1"
-    healthCheckPath: "/health/"
+    healthCheckPath: "/health/"  # Ensure this endpoint exists in your FastAPI app
     dockerfilePath: "ollama-deployment/app/backend/Dockerfile"
 
   - type: web
@@ -22,14 +22,16 @@ services:
         value: "8501"
       - key: PYTHONUNBUFFERED
         value: "1"
-      # Setting the backend URL using Render's internal hostname convention
       - key: BACKEND_URL
         value: "http://fastapi-backend:8000"  # Connects Streamlit to FastAPI internally
-    healthCheckPath: "/health"
+    healthCheckPath: "/health"  # Ensure this endpoint exists in your Streamlit app
     dockerfilePath: "ollama-deployment/app/frontend/Dockerfile"
     
-  - ollama:
-    build: ollama
+  - type: background
+    name: ollama
+    runtime: docker
+    buildCommand: "docker build -t ollama-image ollama"
+    startCommand: "docker run ollama-image"
     ports:
       - 11434:11434
     volumes:
@@ -38,10 +40,10 @@ services:
       - tutorial-net
     entrypoint: ["/usr/bin/bash", "/pull-llama3.sh"]
 
-- networks:
+networks:
   tutorial-net:
     driver: bridge
 
-- volumes:
+volumes:
   tutorial-vol:
     driver: local
